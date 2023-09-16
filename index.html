@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>chappie </title>
+</head>
+<style>
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+  user-select: none;
+  background-color: rgb(0, 0, 0);
+}
+/*SLIDER*...............................................................................*/
+.sr-only {
+  position: absolute;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  color: transparent;
+}
+
+input {
+  position: absolute;
+
+  opacity: 0;
+  margin-top: 95vh;
+  cursor: pointer;
+}
+
+label {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: solid 2px white;
+  border-radius: 999px;
+  background-color: transparent;
+  margin: 95vh 6px 0 6px;
+  z-index: 2;
+  cursor: pointer;
+  transition-duration: .4s;
+  box-shadow: 0 0 20px 0 #000;
+}
+
+input:checked + label{
+  background-color: rgb(255, 255, 255);
+}
+
+input + label::after{
+  content: '';
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512' width='100' style='fill:white'%3E%3Cpath d='M31.7 239l136-136c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9L127.9 256l96.4 96.4c9.4 9.4 9.4 24.6 0 33.9L201.7 409c-9.4 9.4-24.6 9.4-33.9 0l-136-136c-9.5-9.4-9.5-24.6-.1-34z' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center 55%;
+  background-size: 80px 80px;
+  line-height: 100vh;
+  transition: background-size 200ms;
+  position: absolute;
+  color: white;
+  height: calc(95vh - 12px);
+  width: 80px;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
+input + label:hover::after {
+  background-size: 90px 90px;
+}
+
+input:checked + label::after {
+  background-image: none;
+  width: 100vw;
+  left: 0;
+  z-index: 10;
+}
+
+input:checked + label + .slide ~ input + label::after {
+  display: none;
+}
+
+input:checked + label + .slide + input + label::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 512' width='100' fill='white'%3E%3Cpath d='M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z' /%3E%3C/svg%3E");
+  display: block;
+  width: 80px;
+  right: 0;
+  left: auto;
+}
+
+input:focus + label{
+  box-shadow: 0 0 0 2px rgb(249, 249, 249), 0 0 18px white;
+}
+
+.slide {
+  position: absolute;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 80%;
+  top: 10%;
+  left: 0;
+  z-index: -1;
+  transform: translateX(-100%);
+  transition-duration: .4s;
+  opacity: 1;
+  background-color: rgb(0, 0, 0);
+}
+
+input:checked ~ .slide {
+  transform: translateX(100%);
+}
+
+input:checked + label + .slide {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.bg1{ background-color: #000000;
+}
+.bg2{ background-color: #000000;
+} 
+.bg3{ background-color: #000;
+}
+.bg4{ background-color: #000;
+}
+.bg5{ background-color: #000;
+}
+
+/*watermark*...............................................................................*/
+.text1{
+    font-size:380px;
+    color: rgb(14, 13, 13);
+    font-weight: 1000;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-text-stroke: 3px rgb(30, 30, 30);
+    -webkit-text-fill-color: transparent; 
+    
+}
+.text2{
+    font-size:320px;
+    color: rgb(14, 13, 13);
+    font-weight: 1000;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-text-stroke: 3px rgb(30, 30, 30);
+    -webkit-text-fill-color: transparent;  
+    padding-top:25px ; }
+.text3{
+    font-size:400px;
+    color: rgb(14, 13, 13);
+    font-weight: 1000;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-text-stroke: 3px rgb(30, 30, 30);
+    -webkit-text-fill-color: transparent;
+    padding-top:0px; }
+
+    .text4{
+    font-size:290px;
+    color: rgb(14, 13, 13);
+    font-weight: 1000;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-text-stroke: 3px rgb(30, 30, 30);
+    -webkit-text-fill-color: transparent;
+    padding-top:50px; }
+
+
+     /*first page*...............................................................................*/
+.hi{
+    color: white;
+    font-size:70px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 40px;
+    left: 56px;
+}
+.name{
+    color: white;
+    font-size:160px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 100px;
+    left: 52px;
+    color: rgba(235, 28, 28, 0.922);
+}
+.self{
+    color: white;
+    font-size:50px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 305px;
+    left: 62px;
+    color: rgba(255, 255, 255, 0.922);
+}
+.who{
+    color: rgb(255, 0, 0);
+    font-size:40px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 40px;
+    left: 56px;
+        
+}
+
+.who1{
+    color: white;
+    font-size:25px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 93px;
+    left: 56px;
+        
+}
+.what{
+    color: rgb(255, 0, 0);
+    font-size:40px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 186px;
+    left: 150px;
+        
+}
+.what1{
+    color: rgb(255, 255, 255);
+    font-size:25px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 240px;
+    left: 150px;
+        
+}
+
+.else{
+    color: rgb(255, 0, 0);
+    font-size:40px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 336px;
+    left: 56px;
+        
+}
+
+.else1{
+    color: white;
+    font-size:25px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 403px;
+    left: 56px;
+        
+}
+.highlight{
+  background-color: red;
+}
+.latest{
+    color: rgb(67, 67, 67);
+    font-size:40px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    position: absolute;
+    top: 40px;
+    left: 56px;
+        
+}
+/*circles*...............................................................................*/
+.circle1{
+width: 80px;
+height: 80px;
+background-color: rgb(0, 0, 0);
+border:3px solid rgb(93, 93, 93);
+border-radius: 100%;
+position: absolute;
+right: 4%;
+top: 0%;
+}
+
+.circle2{
+width: 80px;
+height: 80px;
+background-color: rgb(0, 0, 0);
+border:2px solid  rgb(30, 30, 30);
+border-radius:100% ;
+position: absolute;
+right: 12%;
+top: 0%;
+
+}
+.circle3{
+width: 80px;
+height: 80px;
+background-color: rgb(0, 0, 0);
+border:2px solid rgb(245, 36, 36);
+border-radius: 100%;
+position: absolute;
+right: 20%;
+top: 0%;
+}
+/*gallery*...............................................................................*/
+div.gallery {
+  margin-top: 130px;
+  margin-left: 60px;
+  border: 10px solid #1d1c1c;
+  float: left;
+
+  
+}
+
+div.gallery img {
+  width: auto;
+  height: 300px;
+}
+
+/*social*...............................................................................*/
+.social{
+  width: 272px;
+  height:40px;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  position: absolute;
+ bottom: 1%;
+  right: 5%;
+  text-align: right;
+  }
+.contact{
+  padding-bottom: 10px;
+   font-size: 15px;  
+  color: rgb(229, 3, 3);
+  position: absolute;
+  bottom: 1%;
+  right: 16%;
+  font-size: 17px;
+  font-weight: bolder;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ }
+/*GAMING ID*...............................................................................*/
+.pubg{
+  width: 450px;
+  height:80px;
+  background-color: rgb(0, 0, 0);
+  color: rgb(99, 99, 99);
+  position: absolute;
+  top: 60px;
+  left: 70px;
+  align-items:left ;
+  font-size: 30px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight:1000;
+  text-align: left;
+}
+.bgmi{
+  width: 450px;
+  height:80px;
+  background-color: rgb(0, 0, 0);
+  color: rgb(99, 99, 99);
+  position: absolute;
+  top: 159px;
+  left: 70px;
+  align-items:left ;
+  font-size: 30px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight:1000;
+  text-align: left;
+}
+.coc{
+  width: 450px;
+  height:80px;
+  background-color: rgb(0, 0, 0);
+  color: rgb(99, 99, 99);
+  position: absolute;
+  top: 255px;
+  left: 70px;
+  align-items:left ;
+  font-size: 30px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight:1000;
+  text-align: left;
+}
+.valorant{
+  width: 450px;
+  height:80px;
+  background-color:black;
+  color: rgb(99, 99, 99);
+  position: absolute;
+  top: 354px;
+  left: 70px;
+  align-items:left ;
+  font-size: 30px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight:1000;
+  text-align: left;
+}
+.steam{
+  width: 450px;
+  height:80px;
+  background-color:black;
+  color: rgb(99, 99, 99);
+  position: absolute;
+  top: 440px;
+  left: 70px;
+  align-items:left ;
+  font-size: 28px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight:1000;
+  text-align: left;
+}
+.conq1{
+  width: 300px;
+  height:225px;
+  background-color:rgb(0, 0, 0);
+  position: absolute;
+  top: 215px;
+  right: 180px;
+  font-size:10PX;
+  font-weight: 1000;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: white;
+  border: 5px solid rgb(32, 32, 32);
+opacity:0.955 ;}
+.conq{
+  width: 300px;
+  height:205px;
+  background-color:rgb(0, 0, 0);
+  position: absolute;
+  top: 0px;
+  right: 400px;
+  font-size:10PX;
+  font-weight: 1000;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: white;
+  border: 5px solid rgb(32, 32, 32);
+}
+</style>
+<body>
+    
+    <input type="radio" id="trigger2" name="slider" checked autofocus>
+    <label for="trigger2"><span class="sr-only"></span></label>
+    <div class="slide bg2">
+
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+        <div class="circle3"></div>
+        
+    
+        <div class="text1">HOME</div>
+        <div class="hi">Hi,im</div>
+        <div class="name">Prathviraj</div>
+        <div class="self">Web-developer</div>
+    </div>
+    
+    <input type="radio" id="trigger3" name="slider">
+    <label for="trigger3"><span class="sr-only"></span></label>
+    <div class="slide bg3">
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+        <div class="circle3"></div>
+        
+        <div class="text2">ABOUT</div>
+        <div class="who">Who am i?</div>
+        <div class="who1">Im'a 19yr old student from Coorg studing ECE in SJCE(const.of jss) Mysore.</div>
+        <div class="what">What do i do?</div>
+        <div class="what1">Self taught Web dveloper specialised in <span class="highlight">HTML</span> , <SPAN class="highlight">CSS</SPAN>, some extent of <span class="highlight"> JAVASCRIPT </span>and <span class="highlight">C++</span> </div>
+   
+        <div class="else">What else do i do?</div>
+        <div class="else1">I like learning new stuff, a self taught Artist and a huge fan of Gaming.</div>
+      </div>
+    
+    <input type="radio" id="trigger4" name="slider">
+    <label for="trigger4"><span class="sr-only"></span></label>
+    <div class="slide bg4">
+      
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+        <div class="circle3"></div>
+          
+
+        
+        <div class="latest">My latest ART</div>
+
+
+        <div class="gallery">
+        <img src="images/1.jpg"  width="600" height="400" >
+         </div>
+        
+        <div class="gallery">
+           <img src="images/4.jpg"  width="600" height="400">
+          </div>
+        
+        <div class="gallery">
+            <img src="images/3.jpg"  width="600" height="400">
+      </div>
+        
+        <div class="gallery">
+          <img src="images/2.jpg"  width="600" height="400">
+       </div>
+
+    </div>
+
+
+    <input type="radio" id="trigger5" name="slider">
+    <label for="trigger5"><span class="sr-only"></span></label>
+    <div class="slide bg5">
+      
+      <div class="circle1"></div>
+      <div class="circle2"></div>
+        <div class="circle3"></div>
+          
+
+        <div class="text4">GAMING</div>
+        <div class="pubg">PUBG ID: 5625098704 </div>
+        <div class="bgmi">BGMI ID: 55642626893 </div>
+        <div class="coc">CoC ID: #QR2UP9U8U</div>
+        <div class="valorant">VALORANT:chappie#2678 </div>
+        <div class="steam">STEAM ID: 76561199112733948 </div>
+        
+        
+        <div class="conq"><img src="images/c1s1.jpg" width="100%" height="">PUBG C1S1 CONQUEROR</div>
+        <div class="conq1"><img src="images/c1s2.jpg" width="100%" height="">PUBG C1S2 CONQUEROR</div>
+        
+        
+    </div>
+   
+
+    <div class="social"> 
+     <a href="mailto:prathvirajmv@gmail.com" ><img src="images/email.png" width="40px" height="40px" ></a>
+     <div class="contact">CONTACT</div> 
+     
+    </div>
+    <script>
+        alert("Website is optimised for Desktop's and Tablets only")
+    </script>
+</body>
+</html>
